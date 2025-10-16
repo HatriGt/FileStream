@@ -13,6 +13,16 @@ from FileStream.utils.render_template import render_page
 
 routes = web.RouteTableDef()
 
+@routes.get("/health", allow_head=True)
+async def health_check_handler(_):
+    """Simple health check endpoint for UpstreamBot and Render"""
+    return web.json_response(
+        {
+            "status": "healthy",
+            "timestamp": int(time.time())
+        }
+    )
+
 @routes.get("/status", allow_head=True)
 async def root_route_handler(_):
     return web.json_response(
